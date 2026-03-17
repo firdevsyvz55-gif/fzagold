@@ -39,7 +39,7 @@ const CSS = `
   .crd-hd{padding:13px 20px;border-bottom:1px solid #f8fafc;font-size:8px;letter-spacing:3px;text-transform:uppercase;color:#c9a84c;font-weight:500;margin-top:1.5px}
   .crd-bd{padding:20px}
   .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
-  .tt{width:100%;border-collapse:collapse;min-width:540px}
+  .tt{width:100%;border-collapse:collapse;min-width:480px}
   .th{padding:10px 13px;text-align:left;font-size:8px;letter-spacing:2px;color:rgba(255,255,255,.5);font-weight:400;white-space:nowrap}
   .td{padding:10px 13px;vertical-align:middle;font-size:11px}
   .tr:hover{background:#f9fafb}
@@ -55,6 +55,8 @@ const CSS = `
   input:focus,select:focus,textarea:focus{border-bottom-color:#c9a84c!important;outline:none}
   @media(max-width:768px){
     .sb{transform:translateX(-100%)}
+    .hm{display:none!important}
+    .tt{min-width:360px}
     .mn{margin-left:0}
     .tb{display:flex;align-items:center;justify-content:space-between;background:#071120;padding:12px 16px;position:sticky;top:0;z-index:90}
     .ct{padding:14px}
@@ -589,9 +591,9 @@ export default function AdminPage() {
                               <div style={{ fontSize: 12, fontWeight: 600, color: NAVY }}>{p.name}</div>
                               {p.badge && <span style={{ fontSize: 7, background: '#fef3c7', color: '#92400e', padding: '2px 5px' }}>{p.badge}</span>}
                             </td>
-                            <td style={{ ...TD, color: '#64748b', textTransform: 'capitalize' }}>{p.category}</td>
+                            <td style={{ ...TD, color: '#64748b', textTransform: 'capitalize' }} className="hm">{p.category}</td>
                             <td style={{ ...TD, color: GOLD, fontWeight: 700, fontSize: 12 }}>{p.karat}K</td>
-                            <td style={{ ...TD, color: '#64748b' }}>{p.weight}gr</td>
+                            <td style={{ ...TD, color: '#64748b' }} className="hm">{p.weight}gr</td>
                             <td style={TD}><button onClick={() => toggleActive(p)} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}><Bdg active={p.is_active} /></button></td>
                             <td style={TD}>
                               <div style={{ display: 'flex', gap: 4 }}>
@@ -835,7 +837,7 @@ export default function AdminPage() {
                             <th style={{ ...TH, width:40 }}>
                               <input type="checkbox" checked={allSel} onChange={e => { if (e.target.checked) setSelLogs(new Set(logs.map(l => l.id))); else setSelLogs(new Set()) }} style={{ cursor:'pointer', accentColor:GOLD }} />
                             </th>
-                            {['TARİH', 'KULLANICI', 'İŞLEM', 'DETAY'].map(h => <th key={h} style={TH}>{h}</th>)}
+                            {['TARİH', 'KULLANICI', 'İŞLEM', 'DETAY'].map((h,i) => <th key={h} style={TH} className={i===1 ? 'hm' : ''}>{h}</th>)}
                           </tr>
                         </thead>
                         <tbody>
@@ -848,8 +850,8 @@ export default function AdminPage() {
                                 <td style={TD} onClick={e => e.stopPropagation()}>
                                   <input type="checkbox" checked={checked} onChange={e => { const s = new Set(selLogs); e.target.checked ? s.add(l.id) : s.delete(l.id); setSelLogs(s) }} style={{ cursor:'pointer', accentColor:GOLD }} />
                                 </td>
-                                <td style={{ ...TD, color:'#64748b', whiteSpace:'nowrap' }}>{new Date(l.created_at).toLocaleString('tr-TR')}</td>
-                                <td style={{ ...TD, color:NAVY, fontWeight:500 }}>{l.user_email}</td>
+                                <td style={{ ...TD, color:'#64748b', whiteSpace:'nowrap', fontSize:10 }}>{new Date(l.created_at).toLocaleString('tr-TR', {day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})}</td>
+                                <td style={{ ...TD, color:NAVY, fontWeight:500 }} className="hm">{l.user_email}</td>
                                 <td style={TD}><span style={{ fontSize:7.5, padding:'3px 8px', fontWeight:700, background:bg, color:txt }}>{l.action}</span></td>
                                 <td style={{ ...TD, color:'#64748b' }}>{l.detail}</td>
                               </tr>
