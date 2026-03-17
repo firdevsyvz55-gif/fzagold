@@ -31,6 +31,7 @@ interface Rates {
 // ─── COMPONENT ────────────────────────────────────────────────────────────────
 export default function Home() {
   const [lang, setLang] = useState<'tr' | 'en'>('tr')
+  const prodRef = useRef<HTMLDivElement>(null)
   const [settings, setSettings] = useState<Settings>({})
   const [products, setProducts] = useState<Product[]>([])
   const [filter, setFilter] = useState('all')
@@ -219,6 +220,7 @@ export default function Home() {
 
     /* ── SECTIONS ── */
     .sec { padding:96px 6% }
+    .sec-products { padding:72px 4% }
     .sec-dark { background:#071120; color:#fff }
     .sec-light { background:#faf9f7; color:#071120 }
     .sec-grey { background:#f4f3f1; color:#071120 }
@@ -228,7 +230,7 @@ export default function Home() {
     .sec-h2 span { display:block; font-size:clamp(36px,4.5vw,58px) }
 
     /* ── CATEGORIES ── */
-    .cat-grid { display:grid; grid-template-columns:2fr 1fr 1fr; grid-template-rows:280px 280px; gap:2px; margin-top:0 }
+    .cat-grid { display:grid; grid-template-columns:2fr 1fr 1fr; grid-template-rows:220px 220px; gap:2px; margin-top:0 }
     .cat-card { position:relative; overflow:hidden; cursor:pointer }
     .cat-card.big { grid-row:1/span 2 }
     .cat-img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition:transform .9s cubic-bezier(.16,1,.3,1) }
@@ -265,21 +267,27 @@ export default function Home() {
     .f-btn { padding:12px 22px; border:none; background:transparent; font-size:8px; letter-spacing:3px; text-transform:uppercase; color:rgba(26,26,26,.35); cursor:pointer; font-family:'Jost',sans-serif; border-bottom:2px solid transparent; margin-bottom:-1px; transition:all .25s; font-weight:400 }
     .f-btn:hover { color:#071120 }
     .f-btn.on { color:#071120; border-bottom-color:#c9a84c }
-    .prod-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1px }
-    .pcard { background:#fff; cursor:pointer; overflow:hidden; position:relative }
-    .pcard-img { aspect-ratio:.8; overflow:hidden; background:#f0eeea }
-    .pcard-img img { width:100%; height:100%; object-fit:cover; transition:transform .8s cubic-bezier(.16,1,.3,1) }
-    .pcard:hover .pcard-img img { transform:scale(1.06) }
-    .pcard-ph { width:100%; height:100%; background:linear-gradient(135deg,#ede9e3,#e4dfd8); display:flex; align-items:center; justify-content:center }
-    .pcard-bdg { position:absolute; top:12px; left:12px; background:#071120; color:#fff; font-size:6px; letter-spacing:2px; padding:4px 9px; font-weight:400; text-transform:uppercase }
-    .pcard-body { padding:18px 20px 22px }
-    .pcard-meta { display:flex; align-items:center; gap:6px; margin-bottom:6px }
-    .pcard-karat { font-size:7px; letter-spacing:3px; color:#c9a84c; text-transform:uppercase }
+    .prod-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; margin:0 -6% }
+    .prod-wrap::-webkit-scrollbar { display:none }
+    .prod-grid { display:flex; gap:2px; width:max-content; padding:0 6% }
+    .prod-nav { display:flex; justify-content:flex-end; gap:8px; margin-bottom:16px }
+    .prod-nav-btn { width:40px; height:40px; border:1px solid rgba(26,26,26,.15); background:white; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:14px; color:#071120; transition:all .2s; font-family:inherit }
+    .prod-nav-btn:hover { background:#071120; color:white; border-color:#071120 }
+    .pcard { width:280px; flex-shrink:0; background:#fff; cursor:pointer; position:relative; transition:opacity .3s }
+    .pcard:hover { opacity:.75 }
+    .pcard-img { width:100%; aspect-ratio:1; overflow:hidden; background:#f8f7f5; display:flex; align-items:center; justify-content:center }
+    .pcard-img img { width:85%; height:85%; object-fit:contain; transition:transform .6s cubic-bezier(.16,1,.3,1) }
+    .pcard:hover .pcard-img img { transform:scale(1.04) }
+    .pcard-ph { width:100%; height:100%; background:#f8f7f5; display:flex; align-items:center; justify-content:center }
+    .pcard-bdg { position:absolute; top:10px; left:10px; background:transparent; color:#071120; font-size:7px; letter-spacing:2px; font-weight:500; text-transform:uppercase }
+    .pcard-body { padding:14px 4px 0; text-align:center }
+    .pcard-meta { display:flex; align-items:center; justify-content:center; gap:6px; margin-bottom:5px }
+    .pcard-karat { font-size:7px; letter-spacing:3px; color:#94a3b8; text-transform:uppercase }
     .pcard-dot { color:rgba(26,26,26,.15); font-size:7px }
-    .pcard-cat { font-size:7px; letter-spacing:2px; color:rgba(26,26,26,.35); text-transform:uppercase }
-    .pcard-name { font-family:'Cormorant Garamond',serif; font-size:18px; color:#071120; margin-bottom:4px; line-height:1.2; font-weight:400 }
-    .pcard-weight { font-size:9.5px; color:rgba(26,26,26,.3); margin-bottom:12px }
-    .pcard-cta { font-size:7.5px; color:#c9a84c; letter-spacing:1.5px; border-bottom:1px solid rgba(201,168,76,.25); padding-bottom:1px; display:inline-block; text-transform:uppercase }
+    .pcard-cat { font-size:7px; letter-spacing:2px; color:#94a3b8; text-transform:uppercase }
+    .pcard-name { font-family:'Cormorant Garamond',serif; font-size:15px; color:#071120; margin-bottom:4px; line-height:1.3; font-weight:400; text-transform:uppercase; letter-spacing:1px }
+    .pcard-weight { font-size:9px; color:rgba(26,26,26,.35); margin-bottom:8px }
+    .pcard-cta { font-size:7px; color:#c9a84c; letter-spacing:2px; text-transform:uppercase }
     .no-prod { padding:80px 0; text-align:center; color:rgba(26,26,26,.3) }
 
     /* ── ABOUT ── */
@@ -396,9 +404,9 @@ export default function Home() {
       .calc-wrap { grid-template-columns:1fr }
       .calc-left, .calc-right { padding:28px }
 
-      .prod-grid { grid-template-columns:repeat(2,1fr) }
-      .pcard-body { padding:14px 16px 18px }
-      .pcard-name { font-size:16px }
+      .pcard { width:200px }
+      .pcard-body { padding:10px 4px 0; text-align:center }
+      .pcard-name { font-size:13px }
 
       .about-grid { grid-template-columns:1fr; gap:48px }
       .contact-grid { grid-template-columns:1fr 1fr; gap:1px }
@@ -427,9 +435,9 @@ export default function Home() {
       .cat-card.big { grid-column:auto; height:200px }
       .cat-card { height:170px }
 
-      .prod-grid { grid-template-columns:repeat(2,1fr); gap:1px }
-      .pcard-body { padding:10px 12px 14px }
-      .pcard-name { font-size:14px }
+      .pcard { width:160px }
+      .pcard-body { padding:8px 4px 0; text-align:center }
+      .pcard-name { font-size:12px }
       .pcard-karat, .pcard-cat { font-size:6.5px }
       .f-btn { padding:10px 16px; font-size:7.5px; letter-spacing:2px }
 
@@ -634,12 +642,17 @@ export default function Home() {
       </section>
 
       {/* ── PRODUCTS ── */}
-      <section id="products" className="sec sec-grey">
-        <p className="eyebrow" style={{ color: '#c9a84c' }}>{T('Ürün Kataloğu', 'Product Catalogue')}</p>
-        <h2 className="sec-h2" style={{ marginBottom: 38 }}>
-          <span>{T('Özel', 'Bespoke')}</span>
-          <span style={{ color: '#c9a84c' }}>{T('Koleksiyon', 'Collection')}</span>
-        </h2>
+      <section id="products" className="sec sec-light sec-products">
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 32 }}>
+          <div>
+            <p className="eyebrow">{T('Ürün Kataloğu', 'Product Catalogue')}</p>
+            <h2 className="sec-h2" style={{ marginBottom: 0 }}>
+              <span>{T('Özel', 'Bespoke')}</span>
+              <span style={{ color: '#c9a84c' }}>{T('Koleksiyon', 'Collection')}</span>
+            </h2>
+          </div>
+          <div style={{ fontSize: 10, color: 'rgba(26,26,26,.3)', letterSpacing: 1 }}>{filtered.length} {T('ürün', 'items')}</div>
+        </div>
         <div className="filter-bar-wrap">
           <div className="filter-bar-inner">
           {CATS.map(c => (
@@ -649,7 +662,12 @@ export default function Home() {
         </div>
         {filtered.length === 0
           ? <div className="no-prod"><div style={{ fontSize: 40, color: '#ddd', marginBottom: 12 }}>◆</div><p style={{ fontSize: 13 }}>{T('Bu kategoride henüz ürün yok.', 'No products in this category yet.')}</p></div>
-          : <div className="prod-grid">
+          : <>
+            <div className="prod-nav">
+              <button className="prod-nav-btn" onClick={() => prodRef.current?.scrollBy({ left: -320, behavior: 'smooth' })}>←</button>
+              <button className="prod-nav-btn" onClick={() => prodRef.current?.scrollBy({ left: 320, behavior: 'smooth' })}>→</button>
+            </div>
+            <div className="prod-wrap" ref={prodRef}><div className="prod-grid">
             {filtered.map(p => (
               <div key={p.id} className="pcard" onClick={() => setModal(p)}>
                 <div className="pcard-img">
@@ -668,7 +686,8 @@ export default function Home() {
                 </div>
               </div>
             ))}
-          </div>
+          </div></div>
+          </>
         }
       </section>
 
