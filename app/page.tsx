@@ -196,7 +196,7 @@ export default function Home() {
       padding:20px 24px;
       min-width:230px;
       z-index:2;
-      box-shadow:0 8px 40px rgba(0,0,0,.4)
+      box-shadow:0 8px 40px rgba(0,0,0,.5)
     }
     .rate-card-main { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:4px }
     .rate-live { display:flex; align-items:center; gap:7px; margin-bottom:14px }
@@ -249,11 +249,11 @@ export default function Home() {
     .c-sel { width:100%; background:rgba(255,255,255,.04); border:none; border-bottom:1px solid rgba(255,255,255,.08); color:#e8e0d0; padding:12px 0; font-size:13px; outline:none; margin-bottom:24px; font-family:'Jost',sans-serif; cursor:pointer; -webkit-appearance:none }
     .c-inp { width:100%; background:transparent; border:none; border-bottom:1px solid rgba(255,255,255,.08); color:#e8e0d0; padding:12px 0; font-size:13px; outline:none; margin-bottom:24px; font-family:'Jost',sans-serif }
     .c-inp:focus, .c-sel:focus { border-bottom-color:rgba(201,168,76,.5) }
-    .calc-result { background:rgba(201,168,76,.05); border:1px solid rgba(201,168,76,.12); padding:28px; margin-bottom:2px }
+    .calc-result { background:#071120; border:1px solid rgba(201,168,76,.12); padding:28px; margin-bottom:2px }
     .calc-res-lbl { font-size:7px; letter-spacing:3px; color:rgba(201,168,76,.6); text-transform:uppercase; margin-bottom:10px }
     .calc-res-val { font-family:'Cormorant Garamond',serif; font-size:44px; font-weight:300; color:#fff; line-height:1; margin-bottom:6px }
     .calc-res-sub { font-size:9px; color:rgba(255,255,255,.25); letter-spacing:2px }
-    .calc-break { background:rgba(255,255,255,.02); border:1px solid rgba(255,255,255,.04); padding:24px; flex:1 }
+    .calc-break { background:#071120; border:1px solid rgba(255,255,255,.04); padding:24px; flex:1 }
     .bd-row { display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid rgba(255,255,255,.04); font-size:11.5px }
     .bd-l { color:rgba(255,255,255,.3) } .bd-r { color:rgba(255,255,255,.7) }
     .bd-total { display:flex; justify-content:space-between; padding:13px 0 0; font-size:14px; color:#c9a84c }
@@ -302,13 +302,13 @@ export default function Home() {
 
     /* ── CONTACT ── */
     .contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:1px; margin-bottom:1px }
-    .c-card { background:rgba(255,255,255,.04); border:1px solid rgba(201,168,76,.08); padding:28px 26px; display:flex; gap:16px; transition:border-color .3s }
+    .c-card { background:#071120; border:1px solid rgba(201,168,76,.1); padding:28px 26px; display:flex; gap:16px; transition:border-color .3s }
     .c-card:hover { border-color:rgba(201,168,76,.2) }
     .c-icon { width:38px; height:38px; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:15px; opacity:.7 }
     .c-title { font-size:9px; letter-spacing:2px; color:rgba(255,255,255,.7); margin-bottom:6px; font-weight:500; text-transform:uppercase }
     .c-text { font-size:11px; color:rgba(255,255,255,.35); line-height:1.9; white-space:pre-line; margin-bottom:10px }
     .c-link { font-size:8px; color:#c9a84c; letter-spacing:1.5px; text-decoration:none; border-bottom:1px solid rgba(201,168,76,.3); padding-bottom:1px; text-transform:uppercase }
-    .c-cta { background:rgba(255,255,255,.03); border:1px solid rgba(201,168,76,.08); padding:36px 44px; display:flex; justify-content:space-between; align-items:center }
+    .c-cta { background:#071120; border:1px solid rgba(201,168,76,.1); padding:36px 44px; display:flex; justify-content:space-between; align-items:center }
     .c-cta-h { font-family:'Cormorant Garamond',serif; font-size:28px; color:#fff; margin-bottom:6px; font-weight:300 }
     .c-cta-p { font-size:11px; color:rgba(255,255,255,.35); line-height:1.8 }
 
@@ -327,7 +327,7 @@ export default function Home() {
 
     /* ── MODAL ── */
     .modal-ov { position:fixed; inset:0; background:rgba(0,0,0,.75); backdrop-filter:blur(8px); z-index:2000; display:flex; align-items:center; justify-content:center; padding:20px }
-    .modal { background:#071120; border:1px solid rgba(255,255,255,.06); width:100%; max-width:620px; max-height:90vh; overflow-y:auto }
+    .modal { background:#050e1a; border:1px solid rgba(255,255,255,.06); width:100%; max-width:620px; max-height:90vh; overflow-y:auto }
     .modal-top { height:2px; background:linear-gradient(90deg,#c9a84c,#e8c97a,#a07830) }
     .modal-head { display:flex; justify-content:space-between; align-items:flex-start; padding:28px 28px 20px }
     .modal-k { font-size:7.5px; letter-spacing:3px; color:#c9a84c; text-transform:uppercase; margin-bottom:6px }
@@ -337,13 +337,13 @@ export default function Home() {
     .modal-x:hover { border-color:rgba(201,168,76,.3); color:#c9a84c }
     .modal-body { padding:0 28px 28px }
     .modal-specs { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; margin-bottom:1px }
-    .modal-spec { background:rgba(255,255,255,.03); padding:16px 18px }
+    .modal-spec { background:#071120; padding:16px 18px }
     .modal-spec-l { font-size:7px; letter-spacing:2.5px; color:rgba(255,255,255,.25); text-transform:uppercase; margin-bottom:6px }
     .modal-spec-v { font-size:12px; color:#fff; font-weight:400 }
     .modal-price-box { margin-top:1px }
     .mpb-inner { display:grid; grid-template-columns:1fr 1fr; gap:1px; margin-bottom:1px }
-    .mpb-rows { background:rgba(255,255,255,.03); padding:20px 18px }
-    .mpb-right { background:rgba(201,168,76,.05); padding:20px 18px }
+    .mpb-rows { background:#071120; padding:20px 18px }
+    .mpb-right { background:#071120; padding:20px 18px }
     .mpb-lbl { font-size:7px; letter-spacing:2.5px; color:rgba(255,255,255,.25); text-transform:uppercase; margin-bottom:12px }
     .mpb-row { display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid rgba(255,255,255,.04) }
     .mpb-row-l { font-size:11px; color:rgba(255,255,255,.35) }
@@ -352,13 +352,13 @@ export default function Home() {
     .mpb-sep { height:1px; background:rgba(255,255,255,.06); margin:12px 0 }
     .mpb-kdv-l { font-size:8px; color:rgba(255,255,255,.25); margin-bottom:2px; letter-spacing:1px }
     .mpb-kdv-v { font-size:15px; color:#c9a84c; margin-bottom:7px; font-weight:400 }
-    .mpb-note { display:flex; align-items:center; gap:7px; margin-top:1px; padding:12px 16px; background:rgba(255,255,255,.02); border:1px solid rgba(255,255,255,.04) }
+    .mpb-note { display:flex; align-items:center; gap:7px; margin-top:1px; padding:12px 16px; background:#071120; border:1px solid rgba(201,168,76,.08) }
     .mpb-note-dot { width:5px; height:5px; border-radius:50%; background:#22c55e; flex-shrink:0 }
     .mpb-note-txt { font-size:8.5px; color:rgba(255,255,255,.2) }
     .modal-btns { display:flex; gap:1px; margin-top:1px }
     .m-btn-wa { flex:1; background:#c9a84c; border:none; color:#fff; padding:15px; font-size:8px; letter-spacing:2.5px; cursor:pointer; font-weight:400; font-family:'Jost',sans-serif; text-align:center; text-decoration:none; display:flex; align-items:center; justify-content:center; text-transform:uppercase; transition:background .3s }
     .m-btn-wa:hover { background:#a07830 }
-    .m-btn-cl { padding:15px 22px; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); color:rgba(255,255,255,.4); cursor:pointer; font-size:8px; letter-spacing:2.5px; font-family:'Jost',sans-serif; text-transform:uppercase; transition:all .25s }
+    .m-btn-cl { padding:15px 22px; background:#071120; border:1px solid rgba(255,255,255,.1); color:rgba(255,255,255,.4); cursor:pointer; font-size:8px; letter-spacing:2.5px; font-family:'Jost',sans-serif; text-transform:uppercase; transition:all .25s }
     .m-btn-cl:hover { border-color:rgba(201,168,76,.25); color:#c9a84c }
 
     /* ── MOBILE ── */
