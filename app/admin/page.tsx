@@ -391,13 +391,22 @@ export default function AdminPage() {
 
   function TF({ label, k, type = 'text', ph = '' }: { label: string; k: string; type?: string; ph?: string }) {
     const [local, setLocal] = useState(S(k))
-    useEffect(() => { setLocal(S(k)) }, [ss[k]])
+    const [focused, setFocused] = useState(false)
+    useEffect(() => { if (!focused) setLocal(S(k)) }, [ss[k]])
     return (
       <div>
         <label style={LBL}>{label}</label>
         {type === 'textarea'
-          ? <textarea value={local} onChange={e => { setLocal(e.target.value); setS(k, e.target.value) }} placeholder={ph} rows={3} style={{ ...INP, resize: 'vertical' }} />
-          : <input type={type} value={local} onChange={e => { setLocal(e.target.value); setS(k, e.target.value) }} placeholder={ph} style={INP} />
+          ? <textarea value={local}
+              onChange={e => { setLocal(e.target.value); setS(k, e.target.value) }}
+              onFocus={() => setFocused(true)}
+              onBlur={() => setFocused(false)}
+              placeholder={ph} rows={3} style={{ ...INP, resize: 'vertical' }} />
+          : <input type={type} value={local}
+              onChange={e => { setLocal(e.target.value); setS(k, e.target.value) }}
+              onFocus={() => setFocused(true)}
+              onBlur={() => setFocused(false)}
+              placeholder={ph} style={INP} />
         }
       </div>
     )
