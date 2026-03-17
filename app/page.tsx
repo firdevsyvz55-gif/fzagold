@@ -196,6 +196,7 @@ export default function Home() {
       min-width:220px;
       z-index:2
     }
+    .rate-card-main { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:4px }
     .rate-live { display:flex; align-items:center; gap:7px; margin-bottom:14px }
     .rate-dot { width:5px; height:5px; border-radius:50%; background:#22c55e; animation:pulse 2s infinite }
     .rate-live-txt { font-size:7px; letter-spacing:3px; text-transform:uppercase; color:rgba(201,168,76,.6) }
@@ -310,13 +311,13 @@ export default function Home() {
     .c-cta-p { font-size:11px; color:rgba(255,255,255,.35); line-height:1.8 }
 
     /* ── FOOTER ── */
-    .footer { background:#0a0a0a; padding:72px 6% 32px }
-    .footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:48px; margin-bottom:56px }
-    .footer-col-t { font-size:7.5px; letter-spacing:3px; text-transform:uppercase; color:rgba(255,255,255,.25); margin-bottom:20px; font-weight:400 }
-    .footer-lnk { display:block; font-size:11.5px; color:rgba(255,255,255,.35); margin-bottom:9px; cursor:pointer; transition:color .25s; text-decoration:none }
+    .footer { background:#0a0a0a; padding:48px 6% 24px }
+    .footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:40px; margin-bottom:36px }
+    .footer-col-t { font-size:7.5px; letter-spacing:3px; text-transform:uppercase; color:rgba(255,255,255,.25); margin-bottom:14px; font-weight:400 }
+    .footer-lnk { display:block; font-size:11px; color:rgba(255,255,255,.3); margin-bottom:7px; cursor:pointer; transition:color .25s; text-decoration:none }
     .footer-lnk:hover { color:#c9a84c }
-    .footer-bot { border-top:1px solid rgba(255,255,255,.06); padding-top:24px; display:flex; justify-content:space-between; align-items:center }
-    .footer-copy { font-size:10px; color:rgba(255,255,255,.18); letter-spacing:1px }
+    .footer-bot { border-top:1px solid rgba(255,255,255,.06); padding-top:18px; display:flex; justify-content:space-between; align-items:center }
+    .footer-copy { font-size:9.5px; color:rgba(255,255,255,.15); letter-spacing:1px }
 
     /* ── WA FAB ── */
     .wa-fab { position:fixed; bottom:24px; right:24px; width:48px; height:48px; border-radius:50%; background:#25D366; display:flex; align-items:center; justify-content:center; font-size:20px; text-decoration:none; box-shadow:0 4px 20px rgba(37,211,102,.35); z-index:999; transition:transform .3s }
@@ -371,11 +372,19 @@ export default function Home() {
       .hero-btns { flex-direction:column; gap:10px; align-items:flex-start }
 
       .rate-card {
-        display:block; position:static;
-        margin:0; width:100%; transform:none;
+        position:static; width:100%; transform:none;
         border:none; border-top:1px solid rgba(201,168,76,.1);
-        background:#0f0f0f; padding:16px 5%
+        background:#111; padding:10px 5%;
+        display:flex; flex-wrap:wrap; align-items:center; gap:8px 16px
       }
+      .rate-card .rate-live { margin-bottom:0 }
+      .rate-card .rate-card-main { flex:1; min-width:0; margin-bottom:0 }
+      .rate-card .rate-big { font-size:18px }
+      .rate-card .rate-sub, .rate-card .rate-divider { display:none }
+      .rate-card .rate-rows { display:flex; gap:12px; margin-left:auto }
+      .rate-card .rate-row { margin-bottom:0 }
+      .rate-card .rate-row-l { font-size:6.5px }
+      .rate-card .rate-row-r { font-size:9.5px }
 
       .cat-grid { grid-template-columns:1fr 1fr; grid-template-rows:auto; gap:2px }
       .cat-card.big { grid-row:auto; grid-column:1/span 2; height:220px }
@@ -423,7 +432,8 @@ export default function Home() {
       .f-btn { padding:10px 16px; font-size:7.5px; letter-spacing:2px }
 
       .contact-grid { grid-template-columns:1fr }
-      .footer-grid { grid-template-columns:1fr; gap:28px }
+      .footer-grid { grid-template-columns:1fr 1fr; gap:24px }
+      .footer { padding:36px 5% 20px }
       .sec { padding:48px 4% }
       .c-cta { padding:24px }
       .stat-grid { grid-template-columns:1fr 1fr }
@@ -514,26 +524,28 @@ export default function Home() {
             <div className="rate-dot" />
             <span className="rate-live-txt">{T('Canlı Altın', 'Live Gold')}</span>
           </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 4 }}>
+          <div className="rate-card-main">
             <div>
-              <div style={{ fontSize: 7.5, letterSpacing: 2, color: 'rgba(255,255,255,.4)', marginBottom: 3 }}>{T('ALIŞ', 'BUY')}</div>
-              <div className="rate-big">₺{fmt(rates.has_altin).split(',')[0]}<span style={{ fontSize: 22 }}>,{fmt(rates.has_altin).split(',')[1]}</span></div>
+              <div style={{ fontSize: 7, letterSpacing: 2, color: 'rgba(255,255,255,.35)', marginBottom: 2 }}>{T('ALIŞ', 'BUY')}</div>
+              <div className="rate-big">₺{fmt(rates.has_altin).split(',')[0]}<span style={{ fontSize: 18 }}>,{fmt(rates.has_altin).split(',')[1]}</span></div>
             </div>
-            <div style={{ textAlign: 'right', paddingBottom: 5 }}>
-              <div style={{ fontSize: 7.5, letterSpacing: 2, color: 'rgba(255,255,255,.4)', marginBottom: 3 }}>{T('SATIŞ', 'SELL')}</div>
-              <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 28, fontWeight: 300, color: '#c9a84c', lineHeight: 1 }}>
-                ₺{fmt(rates.has_altin_satis || rates.has_altin).split(',')[0]}<span style={{ fontSize: 17 }}>,{fmt(rates.has_altin_satis || rates.has_altin).split(',')[1]}</span>
+            <div style={{ textAlign: 'right' }}>
+              <div style={{ fontSize: 7, letterSpacing: 2, color: 'rgba(255,255,255,.35)', marginBottom: 2 }}>{T('SATIŞ', 'SELL')}</div>
+              <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 26, fontWeight: 300, color: '#c9a84c', lineHeight: 1 }}>
+                ₺{fmt(rates.has_altin_satis || rates.has_altin).split(',')[0]}<span style={{ fontSize: 16 }}>,{fmt(rates.has_altin_satis || rates.has_altin).split(',')[1]}</span>
               </div>
             </div>
           </div>
           <div className="rate-sub">HAS ALTIN / GR</div>
           <div className="rate-divider" />
+          <div className="rate-rows">
           {([['22K', rates.altin_22k], ['18K', rates.altin_18k], ['14K', rates.altin_14k]] as [string, number][]).map(([k, v]) => (
             <div key={k} className="rate-row">
               <span className="rate-row-l">{k} / GR</span>
               <span className="rate-row-r">₺{fmt(v)}</span>
             </div>
           ))}
+          </div>
         </div>
       </section>
 
