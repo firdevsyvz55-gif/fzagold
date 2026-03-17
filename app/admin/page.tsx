@@ -21,14 +21,14 @@ const LBL: React.CSSProperties = { display: 'block', fontSize: 8, letterSpacing:
 
 const CSS = `
   @import url('https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&family=Cormorant+Garamond:wght@300;400&display=swap');
-  *,*::before,*::after{box-sizing:border-box} body{margin:0;font-family:'Jost',sans-serif}
-  .aw{display:flex;min-height:100vh;background:#f8f9fb}
+  *,*::before,*::after{box-sizing:border-box} html,body{margin:0;font-family:'Jost',sans-serif;overflow-x:hidden;max-width:100vw}
+  .aw{display:flex;min-height:100vh;background:#f8f9fb;overflow-x:hidden}
   .sb{width:240px;background:#071120;position:fixed;top:0;bottom:0;left:0;display:flex;flex-direction:column;z-index:100;overflow-y:auto;transition:transform .3s cubic-bezier(.16,1,.3,1);scrollbar-width:none}
   .sb::-webkit-scrollbar{display:none}
   .ov{display:none;position:fixed;inset:0;background:rgba(7,17,32,.55);z-index:99;backdrop-filter:blur(3px)}
   .ov.open{display:block}
   .sb.open{transform:translateX(0)!important}
-  .mn{margin-left:240px;flex:1;min-height:100vh}
+  .mn{margin-left:240px;flex:1;min-height:100vh;overflow-x:hidden;min-width:0}
   .tb{display:none}
   .ct{padding:26px 30px}
   .nb{width:100%;display:flex;align-items:center;gap:9px;padding:9px 18px;background:transparent;border:none;border-left:2px solid transparent;color:rgba(255,255,255,.35);font-size:11px;cursor:pointer;font-family:inherit;text-align:left;transition:all .2s}
@@ -39,7 +39,7 @@ const CSS = `
   .crd-hd{padding:13px 20px;border-bottom:1px solid #f8fafc;font-size:8px;letter-spacing:3px;text-transform:uppercase;color:#c9a84c;font-weight:500;margin-top:1.5px}
   .crd-bd{padding:20px}
   .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
-  .tt{width:100%;border-collapse:collapse;min-width:480px}
+  .tt{width:100%;border-collapse:collapse}
   .th{padding:10px 13px;text-align:left;font-size:8px;letter-spacing:2px;color:rgba(255,255,255,.5);font-weight:400;white-space:nowrap}
   .td{padding:10px 13px;vertical-align:middle;font-size:11px}
   .tr:hover{background:#f9fafb}
@@ -56,7 +56,10 @@ const CSS = `
   @media(max-width:768px){
     .sb{transform:translateX(-100%)}
     .hm{display:none!important}
-    .tt{min-width:360px}
+    .tt{min-width:0;width:100%}
+    .tw{overflow-x:hidden}
+    .mn{overflow-x:hidden}
+    .ct{overflow-x:hidden}
     .mn{margin-left:0}
     .tb{display:flex;align-items:center;justify-content:space-between;background:#071120;padding:12px 16px;position:sticky;top:0;z-index:90}
     .ct{padding:14px}
@@ -292,9 +295,14 @@ export default function AdminPage() {
     try {
       const res = await fetch('/api/admin/users')
       const data = await res.json()
-      if (res.ok) setUsers(data.users || [])
-      else showToast('Kullanıcılar yüklenemedi: ' + data.error)
-    } catch { showToast('Kullanıcılar yüklenemedi') }
+      if (res.ok) {
+        setUsers(data.users || [])
+      } else {
+        showToast('Hata: ' + (data.error || 'Bilinmeyen hata'))
+      }
+    } catch (err: any) {
+      showToast('Bağlantı hatası: ' + err.message)
+    }
     setUsersLoading(false)
   }
 
@@ -306,10 +314,10 @@ export default function AdminPage() {
         body: JSON.stringify({ userId: u.id }),
       })
       const data = await res.json()
-      if (!res.ok) throw new Error(data.error)
+      if (!res.ok) throw new Error(data.error || 'Silme başarısız')
       showToast(`${u.email} silindi ✓`)
       addLog(session?.user?.email || '', 'KULLANICI SİLİNDİ', u.email || '')
-      loadUsers()
+      setUsers(prev => prev.filter(x => x.id !== u.id))
     } catch (err: any) { showToast('Hata: ' + err.message) }
   }
 
@@ -770,8 +778,10 @@ export default function AdminPage() {
                       </button>
                     </div>
                     {users.length === 0 && !usersLoading && (
-                      <div style={{ background:'white', border:'1px solid #f1f5f9', padding:'24px', textAlign:'center', color:'#94a3b8', fontSize:12 }}>
-                        Yüklemek için "Yenile"ye tıklayın
+                      <div style={{ background:'white', border:'1px solid #f1f5f9', padding:'24px', textAlign:'center', color:'#94a3b8', fontSize:12, borderRadius:2 }}>
+                        <div style={{fontSize:24,marginBottom:8}}>👥</div>
+                        Kullanıcı listesi yüklenmedi.<br/>
+                        <button onClick={loadUsers} style={{marginTop:10,background:NAVY,border:'none',color:'white',padding:'7px 16px',fontSize:9,letterSpacing:1.5,cursor:'pointer',fontFamily:'inherit'}}>YÜKLE</button>
                       </div>
                     )}
                     {users.map(u => (
