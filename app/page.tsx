@@ -213,8 +213,8 @@ export default function Home() {
 
     /* ── TICKER ── */
     .ticker-wrap { background:#071120; padding:10px 0; overflow:hidden; border-bottom:1px solid rgba(201,168,76,.08) }
-    .ticker { display:flex; gap:56px; animation:ticker 50s linear infinite; white-space:nowrap }
-    .tk-item { display:flex; align-items:center; gap:10px; flex-shrink:0 }
+    .ticker { display:flex; gap:56px; animation:ticker 40s linear infinite; white-space:nowrap }
+    .tk-item { display:flex; align-items:center; gap:10px; flex-shrink:0; padding:0 28px }
     .tk-l { font-size:7.5px; letter-spacing:2.5px; color:rgba(255,255,255,.3); text-transform:uppercase }
     .tk-v { font-size:11px; color:#c9a84c; font-weight:400 }
     .tk-sep { color:rgba(201,168,76,.2); font-size:6px }
@@ -422,6 +422,7 @@ export default function Home() {
 
       .prod-wrap { margin:0 -5% }
       .prod-grid { padding:0 5% }
+      .ticker { gap:20px; animation:ticker 8s linear infinite !important }
     }
 
     @media(max-width:480px){
@@ -460,7 +461,7 @@ export default function Home() {
       .prod-grid { padding:0 4% }
 
       .c-cta-h { font-size:22px }
-      .ticker { gap:32px }
+      .ticker { gap:20px; animation:ticker 8s linear infinite !important }
     }
   `
 
@@ -542,8 +543,8 @@ export default function Home() {
       {/* ── TICKER ── */}
       <div className="ticker-wrap">
         <div className="ticker">
-          {[0, 1].map(x => (
-            <div key={x} style={{ display: 'flex', gap: 60, flexShrink: 0 }}>
+          {[0,1,2,3,4,5,6,7].map(x => (
+            <div key={x} style={{ display: 'flex', gap: 56, flexShrink: 0 }}>
               {([
                 ['HAS ALTIN', `₺${fmt(rates.has_altin)}`],
                 ['22 AYAR', `₺${fmt(rates.altin_22k)}`],
