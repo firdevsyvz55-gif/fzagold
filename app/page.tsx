@@ -32,6 +32,8 @@ interface Rates {
 export default function Home() {
   const [lang, setLang] = useState<'tr' | 'en'>('tr')
   const prodRef = useRef<HTMLDivElement>(null)
+  const tickerRef = useRef<HTMLDivElement>(null)
+  const tickerInnerRef = useRef<HTMLDivElement>(null)
   const [settings, setSettings] = useState<Settings>({})
   const [products, setProducts] = useState<Product[]>([])
   const [filter, setFilter] = useState('all')
@@ -75,6 +77,26 @@ export default function Home() {
     return () => { clearInterval(iv); window.removeEventListener('scroll', onScroll) }
   }, [])
 
+  useEffect(() => {
+    const inner = tickerInnerRef.current
+    if (!inner) return
+    let x = 0
+    const speed = 0.5
+    let rafId: number
+    const start = () => {
+      const halfWidth = inner.scrollWidth / 4
+      const tick = () => {
+        x -= speed
+        if (Math.abs(x) >= halfWidth) x = 0
+        inner.style.transform = `translateX(${x}px)`
+        rafId = requestAnimationFrame(tick)
+      }
+      rafId = requestAnimationFrame(tick)
+    }
+    const timer = setTimeout(start, 100)
+    return () => { cancelAnimationFrame(rafId); clearTimeout(timer) }
+  }, [])
+
   async function fetchRates() {
     try {
       const r = await fetch(`/api/gold-price?t=${Date.now()}`, { cache: 'no-store' })
@@ -108,7 +130,7 @@ export default function Home() {
 
     @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
     @keyframes fadeIn { from{opacity:0} to{opacity:1} }
-    @keyframes ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+    @keyframes ticker { from{transform:translateX(0)} to{transform:translateX(0)} }
     @keyframes shimmer { 0%{background-position:200%} 100%{background-position:-200%} }
     @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
 
@@ -213,7 +235,7 @@ export default function Home() {
 
     /* ── TICKER ── */
     .ticker-wrap { background:#071120; padding:10px 0; overflow:hidden; border-bottom:1px solid rgba(201,168,76,.08) }
-    .ticker { display:flex; gap:56px; animation:ticker 40s linear infinite; white-space:nowrap }
+    .ticker { display:flex; gap:0; white-space:nowrap; will-change:transform }
     .tk-item { display:flex; align-items:center; gap:10px; flex-shrink:0; padding:0 28px }
     .tk-l { font-size:7.5px; letter-spacing:2.5px; color:rgba(255,255,255,.3); text-transform:uppercase }
     .tk-v { font-size:11px; color:#c9a84c; font-weight:400 }
@@ -422,7 +444,11 @@ export default function Home() {
 
       .prod-wrap { margin:0 -5% }
       .prod-grid { padding:0 5% }
-      .ticker { gap:20px; animation:ticker 8s linear infinite !important }
+      .ticker { gap:16px }
+      .tk-item { padding:0 10px; gap:6px }
+      .tk-l { font-size:6px; letter-spacing:1.5px }
+      .tk-v { font-size:9px }
+      .tk-sep { font-size:5px }
     }
 
     @media(max-width:480px){
@@ -461,7 +487,7 @@ export default function Home() {
       .prod-grid { padding:0 4% }
 
       .c-cta-h { font-size:22px }
-      .ticker { gap:20px; animation:ticker 8s linear infinite !important }
+      .ticker { gap:32px }
     }
   `
 
@@ -542,9 +568,9 @@ export default function Home() {
 
       {/* ── TICKER ── */}
       <div className="ticker-wrap">
-        <div className="ticker">
-          {[0,1,2,3,4,5,6,7].map(x => (
-            <div key={x} style={{ display: 'flex', gap: 56, flexShrink: 0 }}>
+        <div className="ticker" ref={tickerInnerRef}>
+          {[0, 1, 2, 3, 4, 5].map(x => (
+            <div key={x} style={{ display: 'flex', flexShrink: 0 }}>
               {([
                 ['HAS ALTIN', `₺${fmt(rates.has_altin)}`],
                 ['22 AYAR', `₺${fmt(rates.altin_22k)}`],
